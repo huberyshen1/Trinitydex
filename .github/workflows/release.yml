@@ -44,7 +44,7 @@ jobs:
         run: |
           npx cap add android
 
-      - name: Upgrade Gradle Wrapper to 8.7
+      - name: Upgrade Gradle Wrapper to 8.9
         run: |
           python3 patch_gradle.py
 
