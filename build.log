@@ -20,7 +20,7 @@ FAILURE: Build failed with an exception.
 
 * What went wrong:
 A problem occurred configuring project ':capacitor-android'.
-> java.util.concurrent.ExecutionException: org.gradle.api.GradleException: Failed to create Jar file /home/runner/.gradle/caches/jars-9/18366b31678c0171857be093a3b8ec22/bcprov-jdk18on-1.79.jar.
+> java.util.concurrent.ExecutionException: org.gradle.api.GradleException: Failed to create Jar file /home/runner/.gradle/caches/jars-9/87cbb8b48032d62826bf2e87da57fa7b/bcprov-jdk18on-1.78.jar.
 
 * Try:
 > Run with --info or --debug option to get more log output.
@@ -174,7 +174,7 @@ org.gradle.api.ProjectConfigurationException: A problem occurred configuring pro
 	at org.gradle.launcher.daemon.server.DaemonStateCoordinator$1.run(DaemonStateCoordinator.java:297)
 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
-Caused by: org.gradle.internal.UncheckedException: java.util.concurrent.ExecutionException: org.gradle.api.GradleException: Failed to create Jar file /home/runner/.gradle/caches/jars-9/18366b31678c0171857be093a3b8ec22/bcprov-jdk18on-1.79.jar.
+Caused by: org.gradle.internal.UncheckedException: java.util.concurrent.ExecutionException: org.gradle.api.GradleException: Failed to create Jar file /home/runner/.gradle/caches/jars-9/87cbb8b48032d62826bf2e87da57fa7b/bcprov-jdk18on-1.78.jar.
 	at org.gradle.internal.UncheckedException.throwAsUncheckedException(UncheckedException.java:68)
 	at org.gradle.internal.UncheckedException.throwAsUncheckedException(UncheckedException.java:41)
 	at org.gradle.internal.UncheckedException.unchecked(UncheckedException.java:76)
@@ -352,10 +352,10 @@ Caused by: org.gradle.internal.UncheckedException: java.util.concurrent.Executio
 	at org.gradle.launcher.daemon.server.DaemonStateCoordinator$1.run(DaemonStateCoordinator.java:297)
 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
-Caused by: java.util.concurrent.ExecutionException: org.gradle.api.GradleException: Failed to create Jar file /home/runner/.gradle/caches/jars-9/18366b31678c0171857be093a3b8ec22/bcprov-jdk18on-1.79.jar.
+Caused by: java.util.concurrent.ExecutionException: org.gradle.api.GradleException: Failed to create Jar file /home/runner/.gradle/caches/jars-9/87cbb8b48032d62826bf2e87da57fa7b/bcprov-jdk18on-1.78.jar.
 	at org.gradle.internal.UncheckedException.unchecked(UncheckedException.java:74)
 	... 174 more
-Caused by: org.gradle.api.GradleException: Failed to create Jar file /home/runner/.gradle/caches/jars-9/18366b31678c0171857be093a3b8ec22/bcprov-jdk18on-1.79.jar.
+Caused by: org.gradle.api.GradleException: Failed to create Jar file /home/runner/.gradle/caches/jars-9/87cbb8b48032d62826bf2e87da57fa7b/bcprov-jdk18on-1.78.jar.
 	at org.gradle.internal.classpath.ClasspathBuilder.jar(ClasspathBuilder.java:57)
 	at org.gradle.internal.classpath.InstrumentingClasspathFileTransformer.instrument(InstrumentingClasspathFileTransformer.java:190)
 	at org.gradle.internal.classpath.InstrumentingClasspathFileTransformer.transform(InstrumentingClasspathFileTransformer.java:182)
@@ -365,7 +365,7 @@ Caused by: org.gradle.api.GradleException: Failed to create Jar file /home/runne
 	at org.gradle.internal.UncheckedException.unchecked(UncheckedException.java:74)
 	at org.gradle.internal.classpath.DefaultCachedClasspathTransformer.lambda$transformAll$11(DefaultCachedClasspathTransformer.java:279)
 	... 2 more
-Caused by: java.io.IOException: Failed to process the entry 'META-INF/versions/21/org/bouncycastle/jcajce/provider/asymmetric/MLKEM$Mappings.class' from '/home/runner/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk18on/1.79/4d8e2732bcee15f1db93df266c3f5b70ce5cac21/bcprov-jdk18on-1.79.jar'
+Caused by: java.io.IOException: Failed to process the entry 'META-INF/versions/21/org/bouncycastle/pqc/jcajce/provider/NTRU$Mappings.class' from '/home/runner/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk18on/1.78/619aafb92dc0b4c6cc4cf86c487ca48ee2d67a8e/bcprov-jdk18on-1.78.jar'
 	at org.gradle.internal.classpath.InstrumentingClasspathFileTransformer.lambda$visitEntries$1(InstrumentingClasspathFileTransformer.java:222)
 	at org.gradle.internal.classpath.ClasspathWalker.visitJarContents(ClasspathWalker.java:91)
 	at org.gradle.internal.classpath.ClasspathWalker.visit(ClasspathWalker.java:55)
@@ -382,4 +382,4 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	... 15 more
 
 
-BUILD FAILED in 46s
+BUILD FAILED in 42s
