@@ -44,9 +44,9 @@ jobs:
         run: |
           npx cap add android
 
-      - name: Force BouncyCastle Downgrade to 1.78
+      - name: Patch Gradle configurations with BouncyCastle 1.78 Override
         run: |
-          echo -e "\nsubprojects {\n    configurations.all {\n        resolutionStrategy {\n            force 'org.bouncycastle:bcprov-jdk18on:1.78'\n        }\n    }\n}" >> android/build.gradle
+          python patch_gradle.py
 
       - name: Generate Android App Icons
         run: |
