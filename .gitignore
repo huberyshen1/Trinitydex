@@ -9,3 +9,4 @@ node_modules/
 capacitor.config.json.bak
 trinity-draft-pc.zip
 trinity-draft-android.apk
+build.log

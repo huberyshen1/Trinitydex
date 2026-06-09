@@ -21,5 +21,23 @@ else:
     print(f"Error: {properties_path} not found!")
     exit(1)
 
+# 2. Patch android/variables.gradle to use compileSdkVersion = 35 and targetSdkVersion = 35
+# to support Build.VERSION_CODES.VANILLA_ICE_CREAM used by newer `@capacitor/android` versions.
+variables_path = os.path.join("android", "variables.gradle")
+if os.path.exists(variables_path):
+    with open(variables_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    
+    import re
+    new_content = re.sub(r"compileSdkVersion\s*=\s*\d+", "compileSdkVersion = 35", content)
+    new_content = re.sub(r"targetSdkVersion\s*=\s*\d+", "targetSdkVersion = 35", new_content)
+    
+    with open(variables_path, "w", encoding="utf-8") as f:
+        f.write(new_content)
+    print("Successfully updated compileSdkVersion and targetSdkVersion to 35 in variables.gradle!")
+else:
+    print(f"Warning: {variables_path} not found!")
+
 # Note: We do NOT patch android/build.gradle with BouncyCastle force override anymore,
 # because Gradle 8.7 natively supports Java 21 classes (major version 65) without crashing.
+

@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 1. Package PC Version
       - name: Package PC Version (ZIP)
@@ -24,15 +24,15 @@ jobs:
 
       # 2. Build Android App using Capacitor
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install dependencies
         run: |
@@ -44,9 +44,9 @@ jobs:
         run: |
           npx cap add android
 
-      - name: Patch Gradle configurations with BouncyCastle 1.78 Override
+      - name: Upgrade Gradle Wrapper to 8.7
         run: |
-          python patch_gradle.py
+          python3 patch_gradle.py
 
       - name: Generate Android App Icons
         run: |
@@ -59,26 +59,16 @@ jobs:
       - name: Build Android APK (Gradle Debug Build)
         run: |
           cd android
-          ./gradlew assembleDebug --stacktrace > ../build.log 2>&1 || {
+          ./gradlew assembleDebug --stacktrace 2>&1 | tail -n 500 || {
             echo "=== GRADLE BUILD FAILED ==="
-            tail -n 300 ../build.log
             exit 1
           }
           cp app/build/outputs/apk/debug/app-debug.apk ../trinity-draft-android.apk
           cd ..
 
-      - name: Upload Build Log to Repository on Failure
-        if: failure()
-        run: |
-          git config --global user.name "Trinity Draft Helper"
-          git config --global user.email "trinity-draft-helper@users.noreply.github.com"
-          git add build.log
-          git commit -m "build: upload build failure logs [skip ci]" || exit 0
-          git push origin main || exit 0
-
       # 3. Create GitHub Release and Upload Assets
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             trinity-draft-pc.zip
