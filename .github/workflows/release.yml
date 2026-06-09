@@ -44,9 +44,9 @@ jobs:
         run: |
           npx cap add android
 
-      - name: Configure Jetifier Ignore for BouncyCastle
+      - name: Force BouncyCastle Downgrade to 1.78
         run: |
-          echo "android.jetifier.ignorelist=bcprov-jdk18on" >> android/gradle.properties
+          echo -e "\nsubprojects {\n    configurations.all {\n        resolutionStrategy {\n            force 'org.bouncycastle:bcprov-jdk18on:1.78'\n        }\n    }\n}" >> android/build.gradle
 
       - name: Generate Android App Icons
         run: |
