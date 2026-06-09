@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRINITY DRAFT 三一轮抽汉化助手</title>
+    <!-- Google Fonts: Inter & Outfit for premium look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    
+    <!-- PWA Manifest & App Config -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="三一轮抽">
+    <link rel="apple-touch-icon" href="./assets/images/icon-192.png">
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registered successfully:', reg.scope))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</head>
+<body class="theme-unified">
+    <!-- Header Area -->
+    <header class="app-header">
+        <div class="header-container">
+            <h1 class="app-title">TRINITY DRAFT <span class="subtitle">汉化助手</span></h1>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs (Only Gallery and Rulebook) -->
+    <nav class="app-nav">
+        <div class="nav-container">
+            <button class="nav-tab active" data-tab="gallery">🎴 卡牌图鉴</button>
+            <button class="nav-tab" data-tab="rulebook">📖 中文规则书</button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="app-content">
+        <!-- 1. Card Gallery Section -->
+        <section class="tab-section active" id="section-gallery">
+            <div class="gallery-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar" id="filtersSidebar">
+                    <div class="sidebar-header">
+                        <h2>高级筛选</h2>
+                        <button class="clear-filters-btn" id="clearFiltersBtn">重置</button>
+                    </div>
+
+                    <!-- Card Pool Filter -->
+                    <div class="filter-group">
+                        <label>卡池系列</label>
+                        <div class="pool-filters">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" name="pool" value="blaze" checked>
+                                <span class="custom-checkbox" style="--pc: #ff2d55;"></span>
+                                <span class="label-text">🔥 红莲 (Blaze)</span>
+                            </label>
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" name="pool" value="phantom" checked>
+                                <span class="custom-checkbox" style="--pc: #a333ff;"></span>
+                                <span class="label-text">💀 幽冥 (Phantom)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Search Input -->
+                    <div class="filter-group">
+                        <label for="cardSearchInput">卡牌检索</label>
+                        <div class="search-wrapper">
+                            <input type="text" id="cardSearchInput" placeholder="输入卡名/编号/种族/效果..." autocomplete="off">
+                            <span class="search-icon">🔍</span>
+                        </div>
+                    </div>
+
+                    <!-- Color Filter -->
+                    <div class="filter-group">
+                        <label>颜色</label>
+                        <div class="color-controls">
+                            <button type="button" class="color-ctrl-btn" id="colorSelectAllBtn">全选</button>
+                            <button type="button" class="color-ctrl-btn" id="colorSelectNoneBtn">全不选</button>
+                        </div>
+                        <div class="color-filters">
+                            <button class="color-btn" data-color="红" title="红" style="--c: #ff3b30;"></button>
+                            <button class="color-btn" data-color="黄" title="黄" style="--c: #ffcc00;"></button>
+                            <button class="color-btn" data-color="蓝" title="蓝" style="--c: #007aff;"></button>
+                            <button class="color-btn" data-color="紫" title="紫" style="--c: #af52de;"></button>
+                            <button class="color-btn" data-color="多色" title="多色" style="--c: linear-gradient(135deg, #ff3b30, #ffcc00, #007aff, #af52de);"></button>
+                            <button class="color-btn" data-color="无色" title="无色/Void" style="--c: #8e8e93;"></button>
+                        </div>
+                    </div>
+
+                    <!-- Rarity Filter -->
+                    <div class="filter-group">
+                        <label>稀有度</label>
+                        <div class="rarity-controls">
+                            <button type="button" class="rarity-ctrl-btn" id="raritySelectAllBtn">全选</button>
+                            <button type="button" class="rarity-ctrl-btn" id="raritySelectNoneBtn">全不选</button>
+                        </div>
+                        <div class="rarity-filters">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" name="rarity" value="EPIC">
+                                <span class="custom-checkbox"></span>
+                                <span class="label-text">EPIC (史诗)</span>
+                            </label>
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" name="rarity" value="LEG">
+                                <span class="custom-checkbox"></span>
+                                <span class="label-text">LEG (传说)</span>
+                            </label>
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" name="rarity" value="R">
+                                <span class="custom-checkbox"></span>
+                                <span class="label-text">R (稀有)</span>
+                            </label>
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" name="rarity" value="U">
+                                <span class="custom-checkbox"></span>
+                                <span class="label-text">U (非寻常)</span>
+                            </label>
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" name="rarity" value="C">
+                                <span class="custom-checkbox"></span>
+                                <span class="label-text">C (普通)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Cost Filter with All / None controls -->
+                    <div class="filter-group">
+                        <label>费用 (Cost)</label>
+                        <div class="cost-controls">
+                            <button type="button" class="cost-ctrl-btn" id="costSelectAllBtn">全选</button>
+                            <button type="button" class="cost-ctrl-btn" id="costSelectNoneBtn">全不选</button>
+                        </div>
+                        <div class="cost-filters" id="costFilters">
+                            <!-- JS Will populate cost pills dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Race Filter -->
+                    <div class="filter-group">
+                        <label for="raceSelect">种族</label>
+                        <select id="raceSelect">
+                            <option value="">全部种族</option>
+                            <!-- JS will dynamically populate distinct races -->
+                        </select>
+                    </div>
+                </aside>
+
+                <!-- Gallery Cards Grid -->
+                <div class="gallery-main">
+                    <!-- Mobile controls -->
+                    <div class="mobile-controls">
+                        <button class="mobile-filter-toggle" id="mobileFilterToggleBtn">
+                            <span>⚙️</span> 筛选与检索
+                        </button>
+                        <div class="results-counter" id="resultsCounter">找到 0 张卡牌</div>
+                    </div>
+
+                    <div class="cards-grid" id="cardsGrid">
+                        <!-- Cards will be dynamically injected here -->
+                    </div>
+                    
+                    <div class="no-results" id="noResultsMessage">
+                        <span class="icon">🚫</span>
+                        <p>未找到符合筛选条件的卡牌，请重置筛选重试。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Rulebook Reader Section -->
+        <section class="tab-section" id="section-rulebook">
+            <div class="rulebook-layout">
+                <!-- Sidebar Page List -->
+                <aside class="rulebook-sidebar">
+                    <div class="sidebar-header">
+                        <h2>规则页目录</h2>
+                    </div>
+                    <!-- Rule Search -->
+                    <div class="rule-search-wrapper">
+                        <input type="text" id="ruleSearchInput" placeholder="在规则书中检索关键词...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <ul class="page-list" id="rulePageList">
+                        <!-- JS Will populate 79 pages here -->
+                    </ul>
+                </aside>
+
+                <!-- Page Content Viewer -->
+                <div class="rulebook-viewer">
+                    <div class="viewer-header">
+                        <div class="page-info">当前页面: <span id="currentRulesPageNum">1</span> / 79</div>
+                        <div class="viewer-controls">
+                            <button class="nav-page-btn" id="prevPageBtn">◀ 上一页</button>
+                            <button class="nav-page-btn" id="nextPageBtn">下一页 ▶</button>
+                        </div>
+                    </div>
+                    <div class="page-content-box" id="rulesPageContent">
+                        <!-- Render rules page image -->
+                        <div class="rule-image-container">
+                            <img id="rulePageImg" src="" alt="规则书页面">
+                            <div class="image-loader active" id="ruleImgLoader">
+                                <span class="spinner"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Fullscreen Card Detail Overlay Modal -->
+    <div class="card-modal" id="cardDetailModal">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-content-wrapper">
+            <!-- Navigation buttons -->
+            <button class="modal-nav-btn prev" id="modalPrevBtn" title="上一张 (左方向键)">◀</button>
+            
+            <div class="modal-body">
+                <!-- Close Button -->
+                <button class="modal-close-btn" id="modalCloseBtn" title="关闭 (Esc)">✕</button>
+
+                <!-- Left: Big Image -->
+                <div class="modal-left">
+                    <div class="modal-img-container">
+                        <img id="modalCardImg" src="" alt="卡牌图片">
+                        <div class="image-loader" id="modalImgLoader">
+                            <span class="spinner"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Metadata & Text -->
+                <div class="modal-right">
+                    <div class="modal-card-header">
+                        <span class="modal-card-no" id="modalCardNo">TD-01 LEG 01</span>
+                        <h2 class="modal-card-name" id="modalCardName">圣剑龙</h2>
+                    </div>
+
+                    <!-- Attribute Pill Row -->
+                    <div class="modal-attributes">
+                        <div class="attribute-pill"><strong>系列:</strong> <span id="modalCardPool">红莲 (Blaze)</span></div>
+                        <div class="attribute-pill"><strong>种族:</strong> <span id="modalCardRace">龙 / 战骑</span></div>
+                        <div class="attribute-pill"><strong>费用:</strong> <span id="modalCardCost">7</span></div>
+                        <div class="attribute-pill"><strong>颜色要求:</strong> <span id="modalCardCostReq">红红红</span></div>
+                        <div class="attribute-pill"><strong>颜色:</strong> <span id="modalCardColor">红</span></div>
+                        <div class="attribute-pill"><strong>力量:</strong> <span id="modalCardBP">7000</span></div>
+                        <div class="attribute-pill"><strong>击碎:</strong> <span id="modalCardCrush">2</span></div>
+                    </div>
+
+                    <!-- Dynamic Properties (Abilities, Special Rules) -->
+                    <div class="modal-text-section">
+                        <h3>效果与能力描述</h3>
+                        <div class="abilities-box" id="modalCardAbilities">
+                            <!-- JS will inject clean HTML text here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="modal-nav-btn next" id="modalNextBtn" title="下一张 (右方向键)">▶</button>
+        </div>
+    </div>
+
+    <!-- Data JS files (Loaded locally without CORS) -->
+    <script src="./assets/data/cards_data.js"></script>
+    <script src="./assets/data/rules_data.js"></script>
+    
+    <!-- Main logic JS -->
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
