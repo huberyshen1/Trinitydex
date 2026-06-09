@@ -38,11 +38,15 @@ jobs:
         run: |
           npm init -y
           npm install @capacitor/core @capacitor/cli
-          npm install @capacitor/android
+          npm install @capacitor/android @capacitor/assets
 
       - name: Add Android Platform
         run: |
           npx cap add android
+
+      - name: Generate Android App Icons
+        run: |
+          npx @capacitor/assets generate --android
 
       - name: Copy Web Assets and Sync
         run: |
