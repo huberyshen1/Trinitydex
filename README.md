@@ -56,8 +56,8 @@
 2. **开启 Pages 服务**：
    * 进入该仓库的 **Settings (设置)** 选项卡。
    * 在左侧菜单栏中点击 **Pages**。
-   * 将 **Build and deployment** 下的 Branch 改为 **`main`** 分支，目录选择 **`/ (root)`**，点击 **Save**。
-3. **获取网址**：稍等 1 分钟后刷新页面，即可在上方获得专属于您的在线卡库链接（例如 `https://huberyshen1.github.io/Trinitydex/dist/`）。
+   * 将 **Build and deployment** 下的 Branch 改为 **`gh-pages`** 分支，目录选择 **`/ (root)`**，点击 **Save**（注意：分支是 `gh-pages` 而不是 `main`，这样可以直接访问根目录，不需要加上 `/dist/` 后缀）。
+3. **获取网址**：稍等 1 分钟后刷新页面，即可在上方获得专属于您的在线卡库链接（例如 `https://huberyshen1.github.io/Trinitydex/`）。
 4. 您的朋友在手机浏览器（如 Safari 或 Chrome）中打开该链接后，在浏览器菜单中选择 **“添加到主屏幕” (Add to Home Screen)** 即可作为 App 安装在手机里。
 
 ---
