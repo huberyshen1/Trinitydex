@@ -38,6 +38,25 @@ if os.path.exists(variables_path):
 else:
     print(f"Warning: {variables_path} not found!")
 
+# 3. Patch android/build.gradle to force newer kotlin-stdlib versions
+# to prevent duplicate class errors (e.g. kotlin-stdlib-jdk8 vs kotlin-stdlib)
+build_gradle_path = os.path.join("android", "build.gradle")
+if os.path.exists(build_gradle_path):
+    with open(build_gradle_path, "a", encoding="utf-8") as f:
+        f.write("\n\n// Resolve duplicate Kotlin classes issue\n")
+        f.write("subprojects {\n")
+        f.write("    configurations.all {\n")
+        f.write("        resolutionStrategy {\n")
+        f.write("            force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'\n")
+        f.write("            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'\n")
+        f.write("            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'\n")
+        f.write("        }\n")
+        f.write("    }\n")
+        f.write("}\n")
+    print("Successfully appended Kotlin stdlib resolution strategy to android/build.gradle!")
+else:
+    print(f"Warning: {build_gradle_path} not found!")
+
 # Note: We do NOT patch android/build.gradle with BouncyCastle force override anymore,
 # because Gradle 8.9 natively supports Java 21 classes (major version 65) without crashing.
 
