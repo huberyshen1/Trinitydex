@@ -1,54 +1,25 @@
 import os
 
-gradle_path = os.path.join("android", "build.gradle")
-if not os.path.exists(gradle_path):
-    print(f"Error: {gradle_path} not found!")
+# 1. Upgrade Gradle wrapper to 8.7
+properties_path = os.path.join("android", "gradle", "wrapper", "gradle-wrapper.properties")
+if os.path.exists(properties_path):
+    with open(properties_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    
+    new_lines = []
+    for line in lines:
+        if line.startswith("distributionUrl="):
+            # Replace gradle-8.2.1-all.zip or similar with gradle-8.7-all.zip
+            line = "distributionUrl=https\\://services.gradle.org/distributions/gradle-8.7-all.zip\n"
+            print(f"Updated distributionUrl to gradle-8.7-all.zip")
+        new_lines.append(line)
+        
+    with open(properties_path, "w", encoding="utf-8") as f:
+        f.writelines(new_lines)
+    print("Successfully upgraded Gradle wrapper to 8.7!")
+else:
+    print(f"Error: {properties_path} not found!")
     exit(1)
 
-with open(gradle_path, "r", encoding="utf-8") as f:
-    content = f.read()
-
-# 1. Inject into the main buildscript block
-# Find 'buildscript {' and insert configurations block right after it
-buildscript_marker = "buildscript {"
-idx = content.find(buildscript_marker)
-if idx == -1:
-    print("Error: Could not find buildscript block in root build.gradle!")
-    exit(1)
-
-insert_idx = idx + len(buildscript_marker)
-injection = """
-    configurations.all {
-        resolutionStrategy {
-            force 'org.bouncycastle:bcprov-jdk18on:1.78'
-        }
-    }
-"""
-
-patched_content = content[:insert_idx] + injection + content[insert_idx:]
-
-# 2. Append subprojects block to the bottom of the file
-subprojects_append = """
-
-subprojects {
-    buildscript {
-        configurations.all {
-            resolutionStrategy {
-                force 'org.bouncycastle:bcprov-jdk18on:1.78'
-            }
-        }
-    }
-    configurations.all {
-        resolutionStrategy {
-            force 'org.bouncycastle:bcprov-jdk18on:1.78'
-        }
-    }
-}
-"""
-
-patched_content += subprojects_append
-
-with open(gradle_path, "w", encoding="utf-8") as f:
-    f.write(patched_content)
-
-print("Successfully patched android/build.gradle with BouncyCastle 1.78 force-resolution strategy!")
+# Note: We do NOT patch android/build.gradle with BouncyCastle force override anymore,
+# because Gradle 8.7 natively supports Java 21 classes (major version 65) without crashing.
