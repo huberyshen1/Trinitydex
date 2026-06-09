@@ -1,0 +1,6 @@
+{
+  "appId": "com.trinitydraft.helper",
+  "appName": "Trinity Draft",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

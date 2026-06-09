@@ -1,0 +1,11 @@
+# Ignore large source files to prevent hitting GitHub's 100MB file limit
+*.xlsx
+*.pdf
+web.txt
+
+# Ignore node modules and local build artifacts
+node_modules/
+.gradle/
+capacitor.config.json.bak
+trinity-draft-pc.zip
+trinity-draft-android.apk
