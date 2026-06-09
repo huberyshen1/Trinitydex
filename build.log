@@ -14,7 +14,6 @@ For more details see https://docs.gradle.org/8.2.1/release-notes.html
 Starting a Gradle Daemon (subsequent builds will be faster)
 
 > Configure project :app
-WARNING: The option setting 'android.jetifier.ignorelist=bcprov-jdk18on' is experimental.
 WARNING: Using flatDir should be avoided because it doesn't support any meta-data formats.
 
 FAILURE: Build failed with an exception.
@@ -383,4 +382,4 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	... 15 more
 
 
-BUILD FAILED in 35s
+BUILD FAILED in 46s
