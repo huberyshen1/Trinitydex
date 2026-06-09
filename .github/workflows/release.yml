@@ -23,10 +23,10 @@ jobs:
           zip -r trinity-draft-pc.zip dist/
 
       # 2. Build Android App using Capacitor
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
 
       - name: Set up Node.js
@@ -43,6 +43,10 @@ jobs:
       - name: Add Android Platform
         run: |
           npx cap add android
+
+      - name: Configure Jetifier Ignore for BouncyCastle
+        run: |
+          echo "android.jetifier.ignorelist=bcprov-jdk18on" >> android/gradle.properties
 
       - name: Generate Android App Icons
         run: |
